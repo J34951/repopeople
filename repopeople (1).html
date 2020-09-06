@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rendering HTML File</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            background: #ff9966;
+        }
+        a{
+            display: block;
+            background: #b7b7b70f;
+            
+        }
+        #button{
+            display:flex;
+            margin:auto;
+            padding: 10px 20px;
+            text-align: center;
+            position: center;
+            background: #e64d00;
+        }
+        ul{
+            display: inline;
+            text-align: center;
+            position: relative;
+            width: 500px;
+        }
+        ul li{
+            text-align: center;
+            background: #ffccb3;
+            padding: 10px 20px;
+            color: #990000;
+            margin: 5px;
+        }
+        #info{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+  <div id="top">
+   <h1> Click Here: </h1>
+   </div>
+   <br>
+    <button id="button">Show Data</button>
+    <br>
+    <div id="mid">
+    <h1>Github Users:</h1>
+    </div>
+    <div id="info">
+    <script>
+        document.getElementById('button').addEventListener('click', showData);
+        function showData() {
+            var req = new XMLHttpRequest();
+            req.open('GET', 'https://api.github.com/users', true);
+            req.onload = function(){
+                if(req.status==200){
+                    var people = JSON.parse(req.responseText)
+                    var display= ' ';
+                    for(var i in people){
+                    display +=
+                    '<div class="a">' +
+                    // '<img src="'+people[i].avatar_url+'">'+
+
+                    '<img src="'+people[i].avatar_url+'" width="200px" height="200px">'+
+
+                    '<ul>' +
+                    '<li>ID: '+people[i].id+'</li>' +
+                    '<li>Login: '+people[i].login+'</li>' 
+                    // '<li>Repos:'+people[i].repos_url +'</li>'
+                    '</ul>' +
+                    '</div>';
+                    
+                    }
+                    document.getElementById('info').innerHTML=display;
+                }
+            }
+            req.send();
+        }
+    </script>
+    </div>
+</body>
+</html>
